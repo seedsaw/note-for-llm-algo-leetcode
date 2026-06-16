@@ -63,7 +63,7 @@ $$
 RMSNorm 先计算均方根：
 
 $$
-\operatorname{RMS}(x)=\sqrt{\frac{1}{d}\sum_{i=1}^{d}x_i^2+\epsilon}
+\mathrm{RMS}(x)=\sqrt{\frac{1}{d}\sum_{i=1}^{d}x_i^2+\epsilon}
 $$
 
 其中 `epsilon` 是一个很小的常数，用于防止除零，常见取值如 `1e-6`。
@@ -71,21 +71,21 @@ $$
 然后做归一化和缩放：
 
 $$
-y_i = \frac{x_i}{\operatorname{RMS}(x)}\cdot \gamma_i
+y_i = \frac{x_i}{\mathrm{RMS}(x)}\cdot \gamma_i
 $$
 
 也可以写成更接近代码的形式：
 
 $$
-\operatorname{variance} = \frac{1}{d}\sum_{i=1}^{d}x_i^2
+\mathrm{variance} = \frac{1}{d}\sum_{i=1}^{d}x_i^2
 $$
 
 $$
-\operatorname{inv\_rms} = \frac{1}{\sqrt{\operatorname{variance}+\epsilon}}
+\mathrm{inv\_rms} = \frac{1}{\sqrt{\mathrm{variance}+\epsilon}}
 $$
 
 $$
-y = x \cdot \operatorname{inv\_rms} \odot \gamma
+y = x \cdot \mathrm{inv\_rms} \odot \gamma
 $$
 
 其中：
@@ -242,7 +242,7 @@ RMSNorm 最危险的地方是 `x^2`，不是归一化后的 `x_norm * weight`。
 原因是 `_norm(x)` 之后，向量的 RMS 被压到了接近 1：
 
 $$
-\operatorname{RMS}(x_{\text{norm}}) \approx 1
+\mathrm{RMS}(x_{\text{norm}}) \approx 1
 $$
 
 这意味着归一化后的大多数元素会落在一个很小的范围内。粗略理解，可以认为绝大多数值通常在 `[-3, 3]` 附近。虽然这不是严格边界，但它足以说明尺度已经被控制住了。
